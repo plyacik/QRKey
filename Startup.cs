@@ -63,6 +63,7 @@ namespace QRKey
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -93,6 +94,7 @@ namespace QRKey
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+
             });
         }
     }
