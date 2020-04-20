@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace QRKey.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class QRkeyController : ControllerBase
