@@ -15,4 +15,9 @@ namespace QRKey.Models
         public string Client_Phone { get; set; }
         public ApplicationUser User { get; set; }
     }
+
+    public class OutQR
+    {
+        public string Code { get; set; }
+    }
 }

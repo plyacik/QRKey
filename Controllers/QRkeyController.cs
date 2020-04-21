@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QRKey.Models;
 
 namespace QRKey.Controllers
 {
@@ -14,12 +15,11 @@ namespace QRKey.Controllers
     public class QRkeyController : ControllerBase
     {
         [HttpGet]
-        [Route("GetQrkey")]
-        //GET : /api/QRKey/GetQrkey
-        public string GetQrkey()
+        //GET : /api/QRKey
+        public ActionResult Get()
         {
-            string code = "HelloWorld";
-            return code;
+            OutQR code = new OutQR { Code = "HelloWorld2" };
+            return Ok(code);
         }
     }
 }

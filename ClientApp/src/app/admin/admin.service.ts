@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
@@ -6,11 +6,9 @@ import { HttpClient } from "@angular/common/http";
 })
 export class AdminService {
 
-  constructor(private http: HttpClient) { }
-
-  readonly BaseURI = 'http://localhost:50741/admin';
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   getNewQrkey() {
-    return this.http.get(this.BaseURI + '/QRKey/GetQrkey').toPromise();
+    return this.http.get(this.baseUrl + 'api/qrkey').toPromise();
   }
 }

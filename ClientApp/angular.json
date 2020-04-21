@@ -50,8 +50,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "QRKey:build",
-            "publicHost":"http://localhost:44370"
+            "browserTarget": "QRKey:build"
           },
           "configurations": {
             "production": {
