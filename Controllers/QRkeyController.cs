@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using QRKey.Data;
 using QRKey.Models;
@@ -17,6 +18,7 @@ namespace QRKey.Controllers
     public class QRkeyController : ControllerBase
     {
         private ApplicationDbContext db;
+        private _userManager = 
         public QRkeyController(ApplicationDbContext context)
         {
             db = context;
@@ -27,14 +29,20 @@ namespace QRKey.Controllers
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-            QRCode qrdb = db.QRCodes.FirstOrDefault(p => p.User.Id == currentUserID);
+            ApplicationUser user = UserManager.;
+            QRCode qr_in_db = db.QRCodes.FirstOrDefault(p => p.User.Id == currentUserID);
             QRView code = new QRView();
-            if (qrdb == null)
+            if (qr_in_db == null)
             {
+                QRCode newQr = new QRCode { 
+                    Code = "123",
+                    Created = DateTime.Now.Ticks,
+                    Validity = DateTime.Now.Ticks + 1000,
+                    User = db.Users.currentUserID
+                }
                 code.Code = "123";
-            } else
-            {
-                code.Code = qrdb.Code;
+            } else {
+                code.Code = qr_in_db.Code;
             }
             
             return Ok(code);

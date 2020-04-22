@@ -9,8 +9,8 @@ namespace QRKey.Models
     {
         public int Id { get; set; }
         public string Code { get; set; }
-        public int Created { get; set; }
-        public int Validity { get; set; }
+        public long Created { get; set; }
+        public long Validity { get; set; }
         public string Client_Name { get; set; }
         public string Client_Phone { get; set; }
         public ApplicationUser User { get; set; }
