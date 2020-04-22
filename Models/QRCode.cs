@@ -16,8 +16,10 @@ namespace QRKey.Models
         public ApplicationUser User { get; set; }
     }
 
-    public class OutQR
+    public class QRView
     {
         public string Code { get; set; }
+        public int Created { get; set; }
+        public int Validity { get; set; }
     }
 }
