@@ -19,7 +19,7 @@ namespace QRKey.Models
     public class QRView
     {
         public string Code { get; set; }
-        public int Created { get; set; }
-        public int Validity { get; set; }
+        public long Created { get; set; }
+        public long Validity { get; set; }
     }
 }

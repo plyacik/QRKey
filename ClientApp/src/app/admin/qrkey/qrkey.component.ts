@@ -8,7 +8,9 @@ import { AdminService } from '../admin.service';
 })
 export class QrkeyComponent implements OnInit {
 
-  constructor(private service: AdminService) {}
+  constructor(private service: AdminService) { }
+
+  public myAngularxQrCode: string = null;
 
   ngOnInit() {
   }
@@ -18,6 +20,7 @@ export class QrkeyComponent implements OnInit {
     this.service.getNewQrkey().then(
       res => {
         console.log(res);
+        this.myAngularxQrCode = res['code'];
       },
       err => {
         console.error(err);
