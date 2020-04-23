@@ -2,5 +2,5 @@
   <button class="btn btn-primary" (click)="onGetQrkey()">Сформировать новый QRKey</button>
 </div>
 <div>
-  <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+  <qr-code [value]="myAngularxQrCode" [size]="150"></qr-code>
 </div>

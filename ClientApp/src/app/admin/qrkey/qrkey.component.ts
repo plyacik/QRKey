@@ -13,19 +13,20 @@ export class QrkeyComponent implements OnInit {
   public myAngularxQrCode: string = null;
 
   ngOnInit() {
-  }
-
-
-  onGetQrkey() {
     this.service.getNewQrkey().then(
       res => {
-        console.log(res);
         this.myAngularxQrCode = res['code'];
+        console.log(this.myAngularxQrCode);
       },
       err => {
         console.error(err);
       }
     )
+  }
+
+
+  onGetQrkey() {
+    
   }
   
 
