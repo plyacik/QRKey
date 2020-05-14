@@ -31,15 +31,16 @@ namespace QRKey.Controllers
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await _userManager.FindByIdAsync(currentUserID);
-            QRCode qr_in_db = db.QRCodes.FirstOrDefault(p => p.User.Id == currentUserID);
+            DateTime now = DateTime.Now;
+            long now_timestamp = new DateTimeOffset(now).ToUnixTimeSeconds();
+            QRCode qr_in_db = db.QRCodes.FirstOrDefault(p => p.User.Id == currentUserID && p.Validity >= now_timestamp);
             QRView code = new QRView();
             if (qr_in_db == null)
             {
-                DateTime now = DateTime.Now;
                 QRCode newQr = new QRCode
                 {
                     Code = RandomString(16),
-                    Created = new DateTimeOffset(now).ToUnixTimeSeconds(),
+                    Created = now_timestamp,
                     Validity = new DateTimeOffset(now.AddDays(14)).ToUnixTimeSeconds(),
                     User = user
                 };
@@ -48,12 +49,46 @@ namespace QRKey.Controllers
                 code.Code = newQr.Code;
                 code.Validity = newQr.Validity;
                 code.Created = newQr.Created;
-            } else {
+            }
+            else
+            {
                 code.Code = qr_in_db.Code;
                 code.Validity = qr_in_db.Validity;
                 code.Created = qr_in_db.Created;
             }
-            
+
+            return Ok(code);
+        }
+
+        [HttpPost]
+        //POST : /api/QRKey
+        public async Task<IActionResult> Post()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await _userManager.FindByIdAsync(currentUserID);
+            DateTime now = DateTime.Now;
+            long now_timestamp = new DateTimeOffset(now).ToUnixTimeSeconds();
+            IQueryable<QRCode> qrs_in_db = db.QRCodes.Where(p => p.User.Id == currentUserID && p.Validity >= now_timestamp);
+            foreach (QRCode one_qr_in_db in qrs_in_db)
+            {
+                one_qr_in_db.Validity = now_timestamp - 1;
+            }
+            db.SaveChanges();
+            QRView code = new QRView();
+            QRCode newQr = new QRCode
+            {
+                Code = RandomString(16),
+                Created = now_timestamp,
+                Validity = new DateTimeOffset(now.AddDays(14)).ToUnixTimeSeconds(),
+                User = user
+            };
+            db.QRCodes.Add(newQr);
+            db.SaveChanges();
+            code.Code = newQr.Code;
+            code.Validity = newQr.Validity;
+            code.Created = newQr.Created;
+
             return Ok(code);
         }
 

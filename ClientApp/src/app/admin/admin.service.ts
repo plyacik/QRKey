@@ -8,7 +8,11 @@ export class AdminService {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
-  getNewQrkey() {
+  getQrkey() {
     return this.http.get(this.baseUrl + 'api/qrkey').toPromise();
+  }
+
+  createQrkey() {
+    return this.http.post(this.baseUrl + 'api/qrkey', {}).toPromise();
   }
 }

@@ -1,6 +1,6 @@
 <div class="row">
-  <button class="btn btn-primary" (click)="onGetQrkey()">Сформировать новый QRKey</button>
+  <button class="btn btn-primary" (click)="onCreateQrkey()">Сформировать новый QRKey</button>
 </div>
 <div>
-  <qr-code [value]="myAngularxQrCode" [size]="150"></qr-code>
+  <qr-code *ngIf="myAngularxQrCode" [value]="myAngularxQrCode" [size]="250"></qr-code>
 </div>
