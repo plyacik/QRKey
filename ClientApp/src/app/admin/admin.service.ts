@@ -15,4 +15,8 @@ export class AdminService {
   createQrkey() {
     return this.http.post(this.baseUrl + 'api/qrkey', {}).toPromise();
   }
+
+  getQrList() {
+    return this.http.get(this.baseUrl + 'api/qrkey/getqrlist').toPromise();
+  }
 }

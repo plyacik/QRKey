@@ -24,6 +24,7 @@ namespace QRKey.Controllers
             db = context;
             _userManager = userManager;
         }
+
         [HttpGet]
         //GET : /api/QRKey
         public async Task<IActionResult> Get()
@@ -90,6 +91,31 @@ namespace QRKey.Controllers
             code.Created = newQr.Created;
 
             return Ok(code);
+        }
+
+        [HttpGet]
+        [Route("GetQrList")]
+        //GET : /api/QRKey/GetQrList
+        public async Task<IActionResult> GetQrList()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await _userManager.FindByIdAsync(currentUserID);
+            DateTime now = DateTime.Now;
+            long now_timestamp = new DateTimeOffset(now).ToUnixTimeSeconds();
+            IQueryable<QRCode> qrs_in_db = db.QRCodes.Where(p => p.User.Id == currentUserID);
+            List<QRView> codes = new List<QRView>();
+            foreach (QRCode one_qr_in_db in qrs_in_db)
+            {
+                QRView code = new QRView();
+                code.Code = one_qr_in_db.Code;
+                code.Validity = one_qr_in_db.Validity;
+                code.Created = one_qr_in_db.Created;
+                code.Client_Name = one_qr_in_db.Client_Name;
+                code.Client_Phone = one_qr_in_db.Client_Phone;
+                codes.Add(code);
+            }
+            return Ok(codes);
         }
 
         private static Random random = new Random();

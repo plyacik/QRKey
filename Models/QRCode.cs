@@ -21,5 +21,7 @@ namespace QRKey.Models
         public string Code { get; set; }
         public long Created { get; set; }
         public long Validity { get; set; }
+        public string Client_Name { get; set; }
+        public string Client_Phone { get; set; }
     }
 }
