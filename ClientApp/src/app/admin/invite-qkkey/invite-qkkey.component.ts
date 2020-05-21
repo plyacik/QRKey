@@ -2,14 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminService } from '../admin.service';
-
-export interface QrCode {
-  code: string;
-  validity: number;
-  created: number;
-  client_Name: string;
-  client_Phone: string;
-}
+import { QrCode, QrCodeResponce} from '../_models/qrcode';
 
 @Component({
   selector: 'app-invite-qkkey',
@@ -18,19 +11,21 @@ export interface QrCode {
 })
 export class InviteQkkeyComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'validity', 'created', 'client_Name', 'client_Phone'];
   getData: QrCode[];
-  dataSource;
+  dataSource: MatTableDataSource<QrCode>;
+  displayedColumns: string[] = ['code', 'validity', 'created', 'client_Name', 'client_Phone'];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private service: AdminService) {}
+  constructor(private service: AdminService) {
+      this.dataSource = new MatTableDataSource(this.getData);
+      this.dataSource.sort = this.sort;
+      console.log(this.dataSource);
+  }
 
   ngOnInit() {
     this.service.getQrList().then(res => {
-      this.getData = res as QrCode[];
-      console.log(this.getData);
-      this.dataSource = new MatTableDataSource(this.getData);
+      this.getData = res;
       this.dataSource.sort = this.sort;
     });
   }

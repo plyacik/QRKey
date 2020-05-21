@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { QrCode, QrCodeResponce} from './_models/qrcode';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,6 @@ export class AdminService {
   }
 
   getQrList() {
-    return this.http.get(this.baseUrl + 'api/qrkey/getqrlist').toPromise();
+    return this.http.get<QrCode[]>(this.baseUrl + 'api/qrkey/getqrlist').toPromise();
   }
 }
