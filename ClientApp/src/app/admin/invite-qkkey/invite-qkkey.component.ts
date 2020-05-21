@@ -20,20 +20,19 @@ export class InviteQkkeyComponent implements OnInit {
 
   displayedColumns: string[] = ['code', 'validity', 'created', 'client_Name', 'client_Phone'];
   getData: QrCode[];
-  dataSource = new MatTableDataSource();
+  dataSource;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private service: AdminService) { }
+  constructor(private service: AdminService) {}
 
   ngOnInit() {
-    this.service.getQrList().then(
-      res => { 
-        this.getData = res as QrCode[];
-        this.dataSource = new MatTableDataSource(this.getData);
-      }
-    )
-    this.dataSource.sort = this.sort;
+    this.service.getQrList().then(res => {
+      this.getData = res as QrCode[];
+      console.log(this.getData);
+      this.dataSource = new MatTableDataSource(this.getData);
+      this.dataSource.sort = this.sort;
+    });
   }
 
 }
