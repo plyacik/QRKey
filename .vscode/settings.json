@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 5,
+            "database": "QRKeyDb",
+            "dialect": "MSSQL",
+            "name": "Localhost",
+            "password": "!Qazxsw2",
+            "port": 1433,
+            "server": "localhost",
+            "username": "plyacik"
+        }
+    ]
+}
