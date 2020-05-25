@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { QrCode, QrCodeResponce} from './_models/qrcode';
+import { QrCode} from './_models/qrcode';
 
 @Injectable({
   providedIn: 'root'
