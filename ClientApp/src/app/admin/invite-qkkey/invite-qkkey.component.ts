@@ -26,7 +26,7 @@ export class InviteQkkeyComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.qrList);
         this.dataSource.sort = this.sort;
       }
-    );    
+    );
   }
 
 }
