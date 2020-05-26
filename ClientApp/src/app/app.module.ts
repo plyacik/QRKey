@@ -5,7 +5,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { QRCodeModule } from 'angular2-qrcode';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -38,6 +42,10 @@ import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.componen
     ApiAuthorizationModule,
     QRCodeModule,
     MatSortModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
     MatTableModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([

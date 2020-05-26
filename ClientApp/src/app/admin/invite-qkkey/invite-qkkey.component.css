@@ -5,3 +5,7 @@ table {
   th.mat-sort-header-sorted {
     color: black;
   }
+
+  .mat-column-select {
+    overflow: initial;
+  }
