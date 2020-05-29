@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { AdminComponent } from './admin/admin.component';
 import { QrkeyComponent } from './admin/qrkey/qrkey.component';
 import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.component';
+import { DialogBoxComponent } from './admin/dialog-box/dialog-box.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.componen
     FetchDataComponent,
     AdminComponent,
     QrkeyComponent,
-    InviteQkkeyComponent
+    InviteQkkeyComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +49,7 @@ import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.componen
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    MatDialogModule,
     MatTableModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
@@ -59,6 +63,9 @@ import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.componen
         ]
       },
     ])
+  ],
+  entryComponents: [
+    DialogBoxComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
