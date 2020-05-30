@@ -10,7 +10,9 @@ namespace QRKey.Models
         public int Id { get; set; }
         public string Code { get; set; }
         public long Created { get; set; }
+        public long StartValidity { get; set; }
         public long Validity { get; set; }
+        public bool IsGuest { get; set; }
         public string Client_Name { get; set; }
         public string Client_Phone { get; set; }
         public ApplicationUser User { get; set; }
@@ -20,6 +22,16 @@ namespace QRKey.Models
     {
         public string Code { get; set; }
         public long Created { get; set; }
+        public long StartValidity { get; set; }
+        public long Validity { get; set; }
+        public bool IsGuest { get; set; }
+        public string Client_Name { get; set; }
+        public string Client_Phone { get; set; }
+    }
+
+    public class AddGuestQRmodel
+    {
+        public long StartValidity { get; set; }
         public long Validity { get; set; }
         public string Client_Name { get; set; }
         public string Client_Phone { get; set; }

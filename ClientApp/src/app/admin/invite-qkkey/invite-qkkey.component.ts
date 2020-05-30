@@ -80,6 +80,16 @@ export class InviteQkkeyComponent implements OnInit {
         this.deleteRowData(result.data);
       }
     });
+
+    dialogRef.beforeClose().subscribe(result => {
+      if(result.event == 'Add'){
+        this.addRowData(result.data);
+      }else if(result.event == 'Update'){
+        this.updateRowData(result.data);
+      }else if(result.event == 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
   }
 
   addRowData(row_obj){
