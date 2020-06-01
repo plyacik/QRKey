@@ -9,6 +9,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,6 +51,9 @@ import { DialogBoxComponent } from './admin/dialog-box/dialog-box.component';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
     MatCheckboxModule,
     MatDialogModule,
     MatTableModule,

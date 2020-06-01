@@ -97,9 +97,11 @@ export class InviteQkkeyComponent implements OnInit {
     let new_element: QrCode = {
       code: '1234',
       created: d.getTime(),
+      startValidity: d.getTime(),
       validity: d.getTime() + 500,
       client_Name: row_obj.client_Name,
-      client_Phone: row_obj.client_Phone
+      client_Phone: row_obj.client_Phone,
+      interval: 3600
     };
     this.dataSource.data.push(new_element);
     this.table.renderRows();
