@@ -20,4 +20,8 @@ export class AdminService {
   getQrList() {
     return this.http.get<QrCode[]>(this.baseUrl + 'api/qrkey/getqrlist').toPromise();
   }
+
+  addGuestQr(guestQr: QrCode) {
+    return this.http.post(this.baseUrl + 'api/qrkey/addguestqr', {guestQr}).toPromise();
+  }
 }

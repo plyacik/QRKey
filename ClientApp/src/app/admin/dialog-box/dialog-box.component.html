@@ -13,8 +13,8 @@
   </mat-form-field>
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
     <mat-label>Срок действия</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let interval of intervals" [value]="interval.value" matInput [(ngModel)]="local_data.interval">
+    <mat-select matInput [(ngModel)]="local_data.interval">
+      <mat-option *ngFor="let interval of intervals" [value]="interval.value">
         {{interval.viewValue}}
       </mat-option>
     </mat-select>

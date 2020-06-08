@@ -1,6 +1,7 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { QrCode} from '../_models/qrcode';
+import { AdminService } from '../admin.service';
 
 interface Interval {
   value: number;
@@ -18,6 +19,7 @@ export class DialogBoxComponent {
   local_data: any;
 
   constructor(
+    private service: AdminService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: QrCode) {
@@ -34,7 +36,12 @@ export class DialogBoxComponent {
   ];
 
   doAction(){
+    let timestamp = this.local_data.startValidity.getTime() / 1000;
+    this.local_data.startValidity = timestamp;
     this.local_data.validity = this.local_data.startValidity + this.local_data.interval;
+    this.service.addGuestQr(this.local_data).then(res => {
+      console.log(res);
+    })
     this.dialogRef.close({event:this.action,data:this.local_data});
   }
 

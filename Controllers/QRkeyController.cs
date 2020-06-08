@@ -125,7 +125,8 @@ namespace QRKey.Controllers
         }
 
         [HttpPost]
-        //POST : /api/QRKey
+        [Route("AddGuestQr")]
+        //POST : /api/QRKey/AddGuestQr
         public async Task<IActionResult> AddGuestQr(AddGuestQRmodel model)
         {
             ClaimsPrincipal currentUser = this.User;
