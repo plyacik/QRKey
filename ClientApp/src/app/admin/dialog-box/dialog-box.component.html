@@ -1,29 +1,43 @@
-<h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
+<h1 mat-dialog-title>Add client QR</h1>
+<form class="example-form" [formGroup]="addForm" (ngSubmit)="doAction()">
 <div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.client_Name">
+  <mat-form-field class="example-full-width">
+    <input matInput formControlName="client_Name" placeholder="Введите имя" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="addForm.hasError('required', 'client_Name')">
+      Нужно ввести Имя
+    </mat-error>
   </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.client_Phone">
+  <mat-form-field class="example-full-width">
+    <input matInput formControlName="client_Phone" placeholder="Введите телефон" [errorStateMatcher]="matcher" >
+    <mat-error *ngIf="addForm.hasError('required', 'client_Phone')">
+      Нужно ввести Телефон
+    </mat-error>
   </mat-form-field>
-  <mat-form-field>
-    <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="local_data.startValidity">
+  <mat-form-field class="example-full-width">
+    <input matInput formControlName="startValidity" [errorStateMatcher]="matcher" [matDatepicker]="myDatepicker" >
     <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #myDatepicker></mat-datepicker>
+    <mat-error *ngIf="addForm.hasError('required', 'startValidity')">
+      Нужно выбрать Дату начала действия
+    </mat-error>
+    <mat-error *ngIf="addForm.hasError('cannotLessNow', 'startValidity')">
+      Дата не может быть меньше текущей
+    </mat-error>
   </mat-form-field>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <mat-form-field class="example-full-width">
     <mat-label>Срок действия</mat-label>
-    <mat-select matInput [(ngModel)]="local_data.interval">
+    <mat-select formControlName="interval" [errorStateMatcher]="matcher" >
       <mat-option *ngFor="let interval of intervals" [value]="interval.value">
         {{interval.viewValue}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="addForm.hasError('required', 'interval')">
+      Нужно выбрать Срок действия
+    </mat-error>
   </mat-form-field>
-  <ng-template #elseTemplate>
-    Sure to delete <b>{{local_data.client_Name}}</b>?
-  </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="doAction()">{{action}}</button>
-  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+  <button mat-button [disabled]="addForm.invalid" (click)="doAction()">Добавить</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Отмена</button>
 </div>
+</form>

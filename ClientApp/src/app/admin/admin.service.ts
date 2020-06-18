@@ -22,6 +22,6 @@ export class AdminService {
   }
 
   addGuestQr(guestQr: QrCode) {
-    return this.http.post(this.baseUrl + 'api/qrkey/addguestqr', {guestQr}).toPromise();
+    return this.http.post(this.baseUrl + 'api/qrkey/addguestqr', guestQr).toPromise();
   }
 }
