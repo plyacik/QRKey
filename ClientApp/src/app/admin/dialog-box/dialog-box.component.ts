@@ -5,6 +5,7 @@ import { AdminService } from '../admin.service';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MinDateValidator } from '../../shared/mindate.validator';
+import { MaxDateValidator } from '../../shared/maxdate.validator';
 
 interface Interval {
   value: number;
@@ -31,7 +32,11 @@ export class DialogBoxComponent {
   addForm : FormGroup = new FormGroup({         
     "client_Name": new FormControl("", [Validators.required]),
     "client_Phone": new FormControl("", [Validators.required]),
-    "startValidity": new FormControl(new Date(),[Validators.required, MinDateValidator.cannotLessNow]),
+    "startValidity": new FormControl(new Date(),[
+      Validators.required, 
+      MinDateValidator.cannotLessNow,
+      MaxDateValidator.cannotMore7Days
+    ]),
     "interval": new FormControl(86400, [Validators.required]),
   });
 

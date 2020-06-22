@@ -23,6 +23,9 @@
     <mat-error *ngIf="addForm.hasError('cannotLessNow', 'startValidity')">
       Дата не может быть меньше текущей
     </mat-error>
+    <mat-error *ngIf="addForm.hasError('cannotMore7Days', 'startValidity')">
+      Дата не может быть больше 7 дней от текущей даты
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Срок действия</mat-label>
