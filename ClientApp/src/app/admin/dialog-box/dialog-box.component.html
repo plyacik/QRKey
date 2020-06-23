@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>Add client QR</h1>
-<form class="example-form" [formGroup]="addForm" (ngSubmit)="doAction()">
+<h1 mat-dialog-title>Добавить пригласительный QR</h1>
+<form class="example-form" [formGroup]="addForm">
 <div mat-dialog-content>
   <mat-form-field class="example-full-width">
     <input matInput formControlName="client_Name" placeholder="Введите имя" [errorStateMatcher]="matcher">
@@ -8,7 +8,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input matInput formControlName="client_Phone" placeholder="Введите телефон" [errorStateMatcher]="matcher" >
+    <input [textMask]="{mask: phone_mask}" matInput formControlName="client_Phone" placeholder="Введите телефон" [errorStateMatcher]="matcher" >
     <mat-error *ngIf="addForm.hasError('required', 'client_Phone')">
       Нужно ввести Телефон
     </mat-error>

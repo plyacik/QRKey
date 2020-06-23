@@ -64,31 +64,13 @@ export class InviteQkkeyComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.code + 1}`;
   }
 
-  openDialog(action,obj) {
-    obj.action = action;
+  openDialog() {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '250px',
-      data:obj
+      width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.event == 'Add'){
-        this.addRowData(result.data);
-      }else if(result.event == 'Update'){
-        this.updateRowData(result.data);
-      }else if(result.event == 'Delete'){
-        this.deleteRowData(result.data);
-      }
-    });
-
-    dialogRef.beforeClose().subscribe(result => {
-      if(result.event == 'Add'){
-        this.addRowData(result.data);
-      }else if(result.event == 'Update'){
-        this.updateRowData(result.data);
-      }else if(result.event == 'Delete'){
-        this.deleteRowData(result.data);
-      }
+      this.ngOnInit();
     });
   }
 

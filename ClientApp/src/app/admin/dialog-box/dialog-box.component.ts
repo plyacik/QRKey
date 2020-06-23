@@ -6,6 +6,7 @@ import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MinDateValidator } from '../../shared/mindate.validator';
 import { MaxDateValidator } from '../../shared/maxdate.validator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Interval {
   value: number;
@@ -26,9 +27,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class DialogBoxComponent {
 
-  action: string;
-  local_data: any;
-
+  public phone_mask = ['+', '3', '8', '(', '0', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  
   addForm : FormGroup = new FormGroup({         
     "client_Name": new FormControl("", [Validators.required]),
     "client_Phone": new FormControl("", [Validators.required]),
@@ -42,16 +42,20 @@ export class DialogBoxComponent {
 
   matcher = new MyErrorStateMatcher();
 
-  send_data: QrCode;
+  send_data: QrCode = {
+    startValidity: 1,
+    validity: 1,
+    client_Name: '',
+    client_Phone: '',
+    code: null,
+    created: null,
+    interval: null
+  };
 
   constructor(
     private service: AdminService,
-    public dialogRef: MatDialogRef<DialogBoxComponent>,
-    //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: QrCode) {
-    this.local_data = { ...data };
-    this.action = this.local_data.action;
-  }
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogBoxComponent>) {}
 
   intervals: Interval[] = [
     {value: 3600, viewValue: 'Час'},
@@ -62,18 +66,30 @@ export class DialogBoxComponent {
   ];
 
   doAction(){
-    let timestamp = this.addForm.get('startValidity').value.getTime() / 1000;
+    console.log('start_cre');
+    let timestamp = Math.trunc(this.addForm.get('startValidity').value.getTime() / 1000);
     this.send_data.startValidity = timestamp;
     this.send_data.validity = timestamp + this.addForm.get('interval').value;
     this.send_data.client_Name = this.addForm.get('client_Name').value;
     this.send_data.client_Phone = this.addForm.get('client_Phone').value;
     
-    this.service.addGuestQr(this.send_data).then(res =>{})
-    this.dialogRef.close({event:this.action,data:this.local_data});
+    this.service.addGuestQr(this.send_data).then(
+      res => { this.dialogRef.close(); },
+      err => {
+        this._snackBar.open(err.error, 'Закрыть', {
+          duration: 2000,
+        });
+      });    
   }
 
   closeDialog(){
     this.dialogRef.close({event:'Cancel'});
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }
