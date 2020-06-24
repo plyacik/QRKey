@@ -17,7 +17,7 @@ export class InviteQkkeyComponent implements OnInit {
 
   qrList: QrCode[] = [];
   dataSource = new MatTableDataSource(this.qrList);
-  displayedColumns: string[] = ['select', 'code', 'validity', 'created', 'client_Name', 'client_Phone', 'action'];
+  displayedColumns: string[] = ['select', 'created', 'client_Name', 'client_Phone', 'validity', 'action'];
   selection = new SelectionModel<QrCode>(true, []);
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;

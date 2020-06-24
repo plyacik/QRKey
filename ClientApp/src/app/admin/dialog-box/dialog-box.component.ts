@@ -58,15 +58,14 @@ export class DialogBoxComponent {
     public dialogRef: MatDialogRef<DialogBoxComponent>) {}
 
   intervals: Interval[] = [
-    {value: 3600, viewValue: 'Час'},
-    {value: 21600, viewValue: '6 Часов'},
     {value: 86400, viewValue: 'Сутки'},
+    {value: 172800, viewValue: '2 сутки'},
+    {value: 345600, viewValue: '4 сутки'},
     {value: 604800, viewValue: 'Неделя'},
     {value: 1209600, viewValue: '2 Недели'},
   ];
 
   doAction(){
-    console.log('start_cre');
     let timestamp = Math.trunc(this.addForm.get('startValidity').value.getTime() / 1000);
     this.send_data.startValidity = timestamp;
     this.send_data.validity = timestamp + this.addForm.get('interval').value;

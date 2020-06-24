@@ -9,3 +9,7 @@ table {
   .mat-column-select {
     overflow: initial;
   }
+
+  .action-button {
+    cursor: pointer;
+  }

@@ -60,6 +60,10 @@ import { AdminComponent } from './admin/admin.component';
 import { QrkeyComponent } from './admin/qrkey/qrkey.component';
 import { InviteQkkeyComponent } from './admin/invite-qkkey/invite-qkkey.component';
 import { DialogBoxComponent } from './admin/dialog-box/dialog-box.component';
+import { registerLocaleData } from '@angular/common';
+import localeUk from '@angular/common/locales/uk';
+
+registerLocaleData(localeUk, 'uk-UA');
 
 @NgModule({
   declarations: [
