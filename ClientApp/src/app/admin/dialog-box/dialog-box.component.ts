@@ -49,7 +49,8 @@ export class DialogBoxComponent {
     client_Phone: '',
     code: null,
     created: null,
-    interval: null
+    interval: null,
+    id: null
   };
 
   constructor(
@@ -73,7 +74,7 @@ export class DialogBoxComponent {
     this.send_data.client_Phone = this.addForm.get('client_Phone').value;
     
     this.service.addGuestQr(this.send_data).then(
-      res => { this.dialogRef.close(); },
+      res => { this.dialogRef.close(res); },
       err => {
         this._snackBar.open(err.error, 'Закрыть', {
           duration: 2000,

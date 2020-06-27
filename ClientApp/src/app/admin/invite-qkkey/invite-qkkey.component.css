@@ -13,3 +13,15 @@ table {
   .action-button {
     cursor: pointer;
   }
+
+  .is-valid {
+    background-color: #e2ffdb;
+  }
+
+  .not-valid {
+    background-color: #ffe6e6;
+  }
+
+  .not-yet-active {
+    background-color: rgb(253, 253, 239);
+  }

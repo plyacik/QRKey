@@ -9,23 +9,6 @@
 
   <table mat-table [dataSource]="dataSource" matSort matSortActive="created" matSortDirection="desc" matSortDisableClear>
 
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()"
-                      [aria-label]="checkboxLabel()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      [aria-label]="checkboxLabel(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-
     <ng-container matColumnDef="created">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Создан </th>
       <td mat-cell *matCellDef="let element"> {{element.created * 1000 | date:'short':'UA':'uk-UA'}} </td>
@@ -41,6 +24,11 @@
       <td mat-cell *matCellDef="let element"> {{element.client_Phone}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="startValidity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Начало действия </th>
+      <td mat-cell *matCellDef="let element"> {{element.startValidity * 1000 | date:'short':'UA':'uk-UA'}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="validity">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Срок действия </th>
       <td mat-cell *matCellDef="let element"> {{element.validity * 1000 | date:'short':'UA':'uk-UA'}} </td>
@@ -50,13 +38,16 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Действие </th>
       <td mat-cell *matCellDef="let element" class="action-link"> 
-        <a class="action-button" (click)="openDialog('Update',element)">Переслать</a> | 
-        <a class="action-button" (click)="openDialog('Delete',element)">Обнулить</a>  
+        <a class="action-button" (click)="sendQr(element)">Переслать</a> | 
+        <a class="action-button" (click)="resetQr(element)">Обнулить</a>  
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+    [class.is-valid]="row.validity > timenow && row.startValidity <= timenow"
+    [class.not-valid]="row.validity < timenow"
+    [class.not-yet-active]="row.validity > timenow && row.startValidity > timenow"
                             (click)="selection.toggle(row)"></tr>
   </table>
 

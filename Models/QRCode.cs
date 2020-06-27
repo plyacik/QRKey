@@ -27,6 +27,7 @@ namespace QRKey.Models
         public bool IsGuest { get; set; }
         public string Client_Name { get; set; }
         public string Client_Phone { get; set; }
+        public int Id { get; set; }
     }
 
     public class AddGuestQRmodel

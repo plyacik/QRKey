@@ -6,4 +6,5 @@ export interface QrCode {
     client_Name: string;
     client_Phone: string;
     interval: number;
+    id: number;
   }

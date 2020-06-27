@@ -119,6 +119,7 @@ namespace QRKey.Controllers
                 code.IsGuest = one_qr_in_db.IsGuest;
                 code.Client_Name = one_qr_in_db.Client_Name;
                 code.Client_Phone = one_qr_in_db.Client_Phone;
+                code.Id = one_qr_in_db.Id;
                 codes.Add(code);
             }
             return Ok(codes);
@@ -154,7 +155,62 @@ namespace QRKey.Controllers
             };
             db.QRCodes.Add(newQr);
             db.SaveChanges();
-            return Ok(true);
+
+            IQueryable<QRCode> qrs_in_db = db.QRCodes.Where(p => p.User.Id == currentUserID && p.IsGuest == true);
+            List<QRView> codes = new List<QRView>();
+            foreach (QRCode one_qr_in_db in qrs_in_db)
+            {
+                QRView code = new QRView();
+                code.Code = one_qr_in_db.Code;
+                code.Validity = one_qr_in_db.Validity;
+                code.StartValidity = one_qr_in_db.StartValidity;
+                code.Created = one_qr_in_db.Created;
+                code.IsGuest = one_qr_in_db.IsGuest;
+                code.Client_Name = one_qr_in_db.Client_Name;
+                code.Client_Phone = one_qr_in_db.Client_Phone;
+                code.Id = one_qr_in_db.Id;
+                codes.Add(code);
+            }
+            return Ok(codes);
+        }
+
+        [HttpGet]
+        [Route("ResetGuestQr")]
+        //GET : /api/QRKey/ResetGuestQr
+        public async Task<IActionResult> ResetGuestQr(int id)
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await _userManager.FindByIdAsync(currentUserID);
+            DateTime now = DateTime.Now;
+            long now_timestamp = new DateTimeOffset(now).ToUnixTimeSeconds();
+            QRCode qr_in_db = db.QRCodes.FirstOrDefault(p => p.User.Id == currentUserID && p.IsGuest == true && p.Id == id);
+            if (qr_in_db == null) {
+                return NotFound("Запись отсутвует в базе данных");
+            }
+
+            if (qr_in_db.Validity >= now_timestamp) {
+                qr_in_db.Validity = now_timestamp - 1;
+                db.QRCodes.Update(qr_in_db);
+                db.SaveChanges();
+            }            
+
+            IQueryable<QRCode> qrs_in_db = db.QRCodes.Where(p => p.User.Id == currentUserID && p.IsGuest == true);
+            List<QRView> codes = new List<QRView>();
+            foreach (QRCode one_qr_in_db in qrs_in_db)
+            {
+                QRView code = new QRView();
+                code.Code = one_qr_in_db.Code;
+                code.Validity = one_qr_in_db.Validity;
+                code.StartValidity = one_qr_in_db.StartValidity;
+                code.Created = one_qr_in_db.Created;
+                code.IsGuest = one_qr_in_db.IsGuest;
+                code.Client_Name = one_qr_in_db.Client_Name;
+                code.Client_Phone = one_qr_in_db.Client_Phone;
+                code.Id = one_qr_in_db.Id;
+                codes.Add(code);
+            }
+            return Ok(codes);
         }
 
         private static Random random = new Random();
